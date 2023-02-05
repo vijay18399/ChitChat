@@ -11,19 +11,11 @@ export class AppComponent {
   currentMode :string = 'init';
   code:string = '';
   message:string ='';
-  messages:any[]=[];
   id='';
   constructor(public peerservice:PeerService,private router:Router) {
     this.peerservice.onPeerAdded.subscribe(data => {
       console.log(data)
       this.currentMode = 'chat';
-    });
-    this.peerservice.onPeerData.subscribe((data:any) => {
-     let message = {
-      from : 'other',
-      text : data
-     }
-      this.messages.push(message)  
     });
   }
   createRoom(){
@@ -45,12 +37,6 @@ export class AppComponent {
   }
   sendMessage(){
      this.peerservice.sendMessage(this.message);
-  
-     let data = {
-      from : 'me',
-      text : this.message
-     }
-     this.messages.push(data)  
-        this.message='';
+     this.message='';
   }
 }

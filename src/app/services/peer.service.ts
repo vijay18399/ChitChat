@@ -8,9 +8,8 @@ export class PeerService {
   peer: Peer;
   peerId: string = '';
   conn: any;
-  messages: any;
+  messages: any[] = [];
   onPeerAdded = new EventEmitter<any>();
-  onPeerData = new EventEmitter<any>();
   constructor() {
     this.peer = new Peer();
     this.peer.on('open', (id) => {
@@ -20,7 +19,13 @@ export class PeerService {
       this.conn = conn;
       this.onPeerAdded.emit(this.conn);
       this.conn.on("data", (msg: string) => {
-          this.onPeerData.emit(msg);
+        console.log(msg)
+        this.messages.push(
+          {
+            from: 'other',
+            text: msg
+          }
+        )
       });
     });
   }
@@ -30,7 +35,12 @@ export class PeerService {
     });
     if (this.conn) {
       this.conn.on("data", (msg: any) => {
-          this.onPeerData.emit(msg);
+        this.messages.push(
+          {
+            from: 'other',
+            text: msg
+          }
+        )
       });
       return true;
     }
@@ -39,7 +49,13 @@ export class PeerService {
     }
 
   }
-  sendMessage(msg:string){
+  sendMessage(msg: string) {
+    this.messages.push(
+      {
+        from: 'me',
+        text: msg
+      }
+    )
     this.conn.send(msg)
   }
 

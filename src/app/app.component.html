@@ -53,7 +53,7 @@
 
   <mat-card *ngIf="currentMode=='chat'" class="chat">
     <div class="messages">
-      <mat-card [class.active]="msg.from =='me'" *ngFor="let msg of messages" class="message">
+      <mat-card [class.active]="msg.from =='me'" *ngFor="let msg of peerservice.messages" class="message">
         {{msg.text}}
       </mat-card>
     </div>
