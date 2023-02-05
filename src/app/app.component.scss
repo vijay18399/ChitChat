@@ -237,3 +237,16 @@ button {
   display: flex;
   align-items: center;
 }
+.vids{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction:column ;
+  *{
+    border:#00C837 2px solid ;
+  }
+}
+video{
+  height: 165px;
+  width: 331px;
+}

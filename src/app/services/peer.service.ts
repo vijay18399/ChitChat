@@ -16,6 +16,7 @@ export class PeerService {
       this.peerId = id;
     });
     this.peer.on("connection", (conn) => {
+      console.log(conn.connectionId)
       this.conn = conn;
       this.onPeerAdded.emit(this.conn);
       this.conn.on("data", (msg: string) => {

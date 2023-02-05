@@ -2,7 +2,6 @@
   <mat-toolbar-row>
     <span  routerLink="/" >ChitChat</span>
     <span class="example-spacer"></span>
-    <!-- <button mat-raised-button>Hire Me</button> -->
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -16,10 +15,10 @@
       <div class="join">
         <div class="input-container">
           <mat-icon matSuffix>keyboard</mat-icon>
-          <input [(ngModel)]="code" type="text" placeholder="Enter The Code">
+          <input [(ngModel)]="otherid" type="text" placeholder="Enter The Code">
         </div>
         <br>
-        <button [disabled]="!code" mat-raised-button color="primary" (click)="joinRoom()">Join </button>
+        <button [disabled]="!otherid" mat-raised-button color="primary" (click)="joinRoom()">Join </button>
 
       </div>
 
@@ -52,19 +51,40 @@
   </mat-card>
 
   <mat-card *ngIf="currentMode=='chat'" class="chat">
-    <div class="messages">
-      <mat-card [class.active]="msg.from =='me'" *ngFor="let msg of peerservice.messages" class="message">
-        {{msg.text}}
-      </mat-card>
-    </div>
-      <div class="join">
-        <div class="input-container">
-          <mat-icon matSuffix>keyboard</mat-icon>
-          <input [(ngModel)]="message" type="text" placeholder="Enter your message">
+    <mat-tab-group >
+      <mat-tab label="Chat"> 
+        <div  class="messages">
+          <mat-card [class.active]="msg.from =='me'" *ngFor="let msg of peerservice.messages" class="message">
+            {{msg.text}}
+          </mat-card>
         </div>
-        <button [disabled]="!message" mat-raised-button color="primary" (click)="sendMessage()"><mat-icon>send</mat-icon>
-        </button>
-    </div>
+          <div class="join">
+            <div class="input-container">
+              <mat-icon matSuffix>keyboard</mat-icon>
+              <input [(ngModel)]="message" type="text" placeholder="Enter your message">
+            </div>
+            <button [disabled]="!message" mat-raised-button color="primary" (click)="sendMessage()"><mat-icon>send</mat-icon>
+            </button>
+        </div>  
+      </mat-tab>
+      <mat-tab label="Video Chat">
+        <div>
+          <div *ngIf="!callActive">
+            <button  (click)="startCall()" mat-raised-button color="primary">Start Video Call</button>
+          </div>
+          <div class="vids" *ngIf="callActive">
+            <video #localVideo></video>
+            <video #remoteVideo></video>
+          </div>
+        </div>
+        <div class="join">
+    
+          <button  mat-raised-button color="primary" (click)="endCall()">End Call
+          </button>
+      </div>  
+      </mat-tab>
+    </mat-tab-group>
+ 
   </mat-card>
 
 </div>
