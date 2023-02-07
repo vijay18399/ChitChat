@@ -17,6 +17,7 @@ export class AppComponent {
   remoteStream: MediaStream | undefined;
   constructor(public peerservice: PeerService) {
     this.peerservice.onPeerAdded.subscribe(data => {
+      this.otherid = data.peer;
       this.currentMode = 'chat';
     });
     this.peerservice.peer.on('call', (call) => {
