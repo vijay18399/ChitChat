@@ -24,7 +24,8 @@ export class PeerService {
         this.messages.push(
           {
             from: 'other',
-            text: msg
+            text: msg,
+            date : new Date()
           }
         )
       });
@@ -39,7 +40,8 @@ export class PeerService {
         this.messages.push(
           {
             from: 'other',
-            text: msg
+            text: msg,
+            date : new Date()
           }
         )
       });

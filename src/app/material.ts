@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// Material Form Controls
+import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatSliderModule} from '@angular/material/slider';
@@ -16,6 +16,7 @@ import {MatTabsModule} from '@angular/material/tabs';
   declarations: [],
   imports: [
     CommonModule,
+    MatSidenavModule,
     MatCardModule,
     MatSliderModule,
     MatIconModule,
@@ -31,6 +32,7 @@ import {MatTabsModule} from '@angular/material/tabs';
   exports: [
     MatCardModule,
     MatSliderModule,
+    MatSidenavModule,
     MatIconModule,
     MatMenuModule,
     MatInputModule,

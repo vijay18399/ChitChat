@@ -1,12 +1,13 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span  routerLink="/" >ChitChat</span>
+    <span routerLink="/">ChitChat</span>
     <span class="example-spacer"></span>
+    <button *ngIf="currentMode=='chat'" mat-button (click)="changeTab()"><mat-icon>{{tab}}</mat-icon></button>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="container">
-  <mat-card *ngIf="currentMode=='init'" class="card">
+<div *ngIf="currentMode=='init'" class="icontainer">
+  <mat-card class="card">
     <h3>
       Hey you are one step away, Create a Room or Join a Room
     </h3>
@@ -24,67 +25,34 @@
 
     </div>
   </mat-card>
-  <mat-card *ngIf="currentMode=='wait'" class="wait">
-    <div class="rcontainer">
-      <div class="robo">
-          <div class="head">
-              <div class="face">
-                  <div class="eyes">
-                      <div class="eye"></div>
-                      <div class="eye"></div>
-                  </div>
-                  <div class="mouth"></div>
-              </div>
-          </div>
-          <div class="body">
-              <div class="tag">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-              </div>
-          </div>
-      </div>
-      <div class="arm1"></div>
-      <div class="arm2"></div>
-  </div>
-    Your Code is {{id}}  <button mat-raised-button color="primary"  [cdkCopyToClipboard]="id">Copy</button>
-  </mat-card>
+</div>
 
-  <mat-card *ngIf="currentMode=='chat'" class="chat">
-    <mat-tab-group >
-      <mat-tab label="Chat"> 
-        <div  class="messages">
-          <mat-card [class.active]="msg.from =='me'" *ngFor="let msg of peerservice.messages" class="message">
-            {{msg.text}}
-          </mat-card>
-        </div>
-          <div class="join">
-            <div class="input-container">
-              <mat-icon matSuffix>keyboard</mat-icon>
-              <input [(ngModel)]="message" type="text" placeholder="Enter your message">
-            </div>
-            <button [disabled]="!message" mat-raised-button color="primary" (click)="sendMessage()"><mat-icon>send</mat-icon>
-            </button>
-        </div>  
-      </mat-tab>
-      <mat-tab label="Video Chat">
-        <div>
-          <div *ngIf="!callActive">
-            <button  (click)="startCall()" mat-raised-button color="primary">Start Video Call</button>
-          </div>
-          <div class="vids" *ngIf="callActive">
-            <video #localVideo></video>
-            <video #remoteVideo></video>
-          </div>
-        </div>
-        <div class="join">
-    
-          <button  mat-raised-button color="primary" (click)="endCall()">End Call
-          </button>
-      </div>  
-      </mat-tab>
-    </mat-tab-group>
- 
+
+
+<div *ngIf="currentMode=='chat' && tab=='chat'" class="vcontainer">
+  <div class="videoContainer">
+    <video #localVideo></video>
+    <video #remoteVideo></video>
+  </div>
+  <div class="btnContainer">
+    <button (click)="endCall()" mat-raised-button color="primary">End Call</button>
+    <button [matTooltip]="id" [cdkCopyToClipboard]="id" mat-raised-button color="primary">Copy ID
+      <mat-icon>content_paste</mat-icon></button>
+  </div>
+</div>
+<div *ngIf="currentMode=='chat' && tab=='videocam'" class="ccontainer">
+  <mat-card class="messages">
+    <mat-card [class.active]="msg.from =='me'" *ngFor="let msg of peerservice.messages" class="message">
+      {{msg.text}}
+    </mat-card>
+  </mat-card>
+  <mat-card class="join">
+    <div class="input-container">
+      <mat-icon matSuffix>keyboard</mat-icon>
+      <input [(ngModel)]="message" type="text" placeholder="Enter your message">
+    </div>
+    <button [disabled]="!message" mat-raised-button color="primary" (click)="sendMessage()"><mat-icon>send</mat-icon>
+    </button>
   </mat-card>
 
 </div>

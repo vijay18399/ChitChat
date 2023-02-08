@@ -11,6 +11,7 @@ export class AppComponent {
   message: string = '';
   id = '';
   callActive = false;
+  tab ='chat';
   @ViewChild('localVideo') localVideo!: ElementRef;
   @ViewChild('remoteVideo') remoteVideo!: ElementRef;
   localStream: MediaStream | undefined;
@@ -34,11 +35,28 @@ export class AppComponent {
       });
 
     });
+
+
+    this.peerservice.peer.on('disconnected', ()=>{
+      alert("Connection lost. Please reconnect");
+      this.peerservice.peer.reconnect();
+    });
+    this.peerservice.peer.on('close', ()=>{
+      alert("Connection lost. Please refresh");
+  });
+  }
+  changeTab(){
+    if(this.tab=='videocam'){
+      this.tab='chat';
+    }else{
+      this.tab='videocam';
+    }
   }
   createRoom() {
     if (this.peerservice.peerId) {
       this.id = this.peerservice.peerId;
-      this.currentMode = 'wait'
+      this.currentMode = 'chat'
+      this.startCall()
     }
     else {
       alert("Unable to create Room")
@@ -71,6 +89,7 @@ export class AppComponent {
     }, (err) => {
       console.log(err)
     });
+    
   }
 
   endCall() {
